@@ -25,3 +25,17 @@ let filesToCache = [
     );
     console.log(eventListener);
   });
+  
+  self.addEventListener("fetch", (eventListener) => {
+    eventListener.respondWith(
+      caches.match(eventListener.fetch).then((fetch) => {
+        if (fetch) {
+          return fetch;
+        } else {
+          return fetch(eventListener.fetch);
+        }
+      })
+    );
+    console.log(eventListener);
+  });
+  
